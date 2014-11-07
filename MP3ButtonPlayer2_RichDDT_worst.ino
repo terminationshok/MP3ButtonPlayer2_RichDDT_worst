@@ -1,4 +1,8 @@
 /**
+ * Written by Dan Cote terminationshok@gmail.com for Rich DDT
+ * requires SFEMP3Shield library
+ * adapted from:
+ * https://github.com/madsci1016/Sparkfun-MP3-Player-Shield-Arduino-Library/tree/master/SFEMP3Shield
  * \file MP3ButtonPlayer2.ino
  *
  * \brief Example sketch of using the MP3Shield Arduino driver using buttons,
@@ -162,6 +166,7 @@ void loop() {
       Serial.print(F("B_STOP pressed, Stopping Track #"));
       Serial.println(current_track);
       MP3player.stopTrack();
+      MP3player.playTrack(2);//start shutdown track
     }
   }
 
@@ -179,7 +184,7 @@ void loop() {
 
   if (b_Play1.update()) {
     if (b_Play1.read() == LOW)	{
-      Serial.print(F("B_PLAY1 pressed, Start Playing Track #1 "));
+      Serial.print(F("B_PLAY1 LOW, Start Playing Track #1 "));
       current_track=1;
       Serial.println(current_track);
       MP3player.playTrack(current_track);
@@ -188,7 +193,7 @@ void loop() {
 
   if (b_Play2.update()) {
     if (b_Play2.read() == LOW)	{
-      Serial.print(F("B_PLAY2 pressed, Start Playing Track #2 "));
+      Serial.print(F("B_PLAY2 LOW, Start Playing Track #2 "));
       current_track=2;
       Serial.println(current_track);
       MP3player.playTrack(current_track);
@@ -196,6 +201,11 @@ void loop() {
   }
 
 
-   //Do something. Have fun with it.
+    if (b_Stop.read() == HIGH)	{//play anytime stop pin is high
+      Serial.print(F("B_PLAY2 HIGH, Start Playing Track #1 "));
+      current_track=1;
+      Serial.println(current_track);
+      MP3player.playTrack(current_track);
+    }
 
 }
